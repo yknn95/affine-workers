@@ -1,0 +1,22 @@
+version: "2"
+services:
+  nginx:
+    image: affine-workers:nginx
+    container_name: affine_nginx
+    ports:
+      - '${PORT:-3010}:3011'
+    depends_on:
+      - affine
+      - affine_workers
+    restart: unless-stopped
+
+  affine_workers:
+    image: affine-workers:worker
+    container_name: affine_workers
+    #ports:
+    #  - '3000:3000'
+    restart: unless-stopped
+
+  affine:
+    image: ghcr.io/toeverything/affine-graphql:${AFFINE_REVISION:-stable}
+    .....
